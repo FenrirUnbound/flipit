@@ -7,6 +7,14 @@ function activate(featureName) {
     return true;
 }
 
+function deactivate(featureName) {
+    if (features_.hasOwnProperty(featureName)) {
+        delete features_[featureName];
+    }
+
+    return true;
+}
+
 function isActive(featureName) {
     if (features_.hasOwnProperty(featureName)) {
         return features_[featureName];
@@ -17,5 +25,6 @@ function isActive(featureName) {
 
 module.exports = {
     "activate": activate,
+    "deactivate": deactivate,
     "isActive": isActive
 };

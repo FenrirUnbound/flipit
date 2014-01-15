@@ -16,7 +16,8 @@ Y.TestRunner.add(new Y.TestCase({
         var self = this,
             testEndpoints = [
                 'isActive',
-                'activate'
+                'activate',
+                'deactivate'
             ];
 
         testEndpoints.forEach(function (endpoint) {
@@ -33,12 +34,17 @@ Y.TestRunner.add(new Y.TestCase({
         Assert.isFalse(this.app.isActive(feature));
     },
 
-    "enable a feature": function () {
+    "toggle a feature": function () {
         var feature = 'brandSpankingNewFeature';
 
         Assert.isTrue(this.app.activate(feature),
             'Feature "' + feature + '" has been activated.');
         Assert.isTrue(this.app.isActive(feature),
             'Feature "' + feature + '" is currently active.');
-    }
+
+        Assert.isTrue(this.app.deactivate(feature),
+            'Feature "' + feature + '" has been deactivated.');
+        Assert.isFalse(this.app.isActive(feature),
+            'Feature "' + feature + '" is currently inactive.');
+    },
 }));
