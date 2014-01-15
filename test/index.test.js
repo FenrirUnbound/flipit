@@ -2,7 +2,7 @@ var Y = require('yuitest'),
     Assert = Y.Assert;
 
 Y.TestRunner.add(new Y.TestCase({
-    "name": "Basic test case",
+    "name": "Test Index",
 
     "setUp": function () {
         this.app = require('../index');
@@ -28,15 +28,11 @@ Y.TestRunner.add(new Y.TestCase({
         });
     },
 
-    "check isEnabled endpoint for unavailable features": function () {
-        var feature = 'notAnAvailableFeature';
-
-        Assert.isFalse(this.app.isEnabled(feature));
-    },
-
     "toggle a feature": function () {
         var feature = 'brandSpankingNewFeature';
 
+        Assert.isFalse(this.app.isEnabled(feature),
+            'Feature "' + feature + '" is initially disabled.');
         Assert.isTrue(this.app.enable(feature),
             'Feature "' + feature + '" has been enabled.');
         Assert.isTrue(this.app.isEnabled(feature),
@@ -47,4 +43,13 @@ Y.TestRunner.add(new Y.TestCase({
         Assert.isFalse(this.app.isEnabled(feature),
             'Feature "' + feature + '" is currently inactive.');
     },
+
+    "disable an already disabled feature": function () {
+        var feature = 'brandSpankingNewFeature';
+
+        Assert.isFalse(this.app.isEnabled(feature),
+            'Feature "' + feature + '" is initially disabled.');
+        Assert.isFalse(this.app.disable(feature),
+            'Feature "' + feature + '" is already disabled.');
+    }
 }));

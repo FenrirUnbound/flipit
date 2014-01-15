@@ -10,9 +10,10 @@ function enable(featureName) {
 function disable(featureName) {
     if (features_.hasOwnProperty(featureName)) {
         delete features_[featureName];
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 function isEnabled(featureName) {
