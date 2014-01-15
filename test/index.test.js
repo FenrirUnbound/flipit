@@ -8,7 +8,7 @@ Y.TestRunner.add(new Y.TestCase({
         this.app = require('../index');
     },
 
-    "test require the package": function () {
+    "test require index package": function () {
         Assert.isNotUndefined(this.app, 'App is a valid package to import');
     },
 
