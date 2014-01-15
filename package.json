@@ -1,0 +1,23 @@
+{
+    "name": "flipit",
+    "version": "0.1.0",
+    "description": "Feature flagging for NodeJS",
+    "main": "index.js",
+    "scripts": {
+        "test": "ytestrunner"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/FenrirUnbound/flipit.git"
+    },
+    "author": "Darren m",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/FenrirUnbound/flipit/issues"
+    },
+    "devDependencies": {
+        "yuitest": "*",
+        "ytestrunner": "*",
+        "jslint": "*"
+    }
+}
