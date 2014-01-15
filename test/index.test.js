@@ -15,9 +15,9 @@ Y.TestRunner.add(new Y.TestCase({
     "validate API": function () {
         var self = this,
             testEndpoints = [
-                'isActive',
-                'activate',
-                'deactivate'
+                'isEnabled',
+                'enable',
+                'disable'
             ];
 
         testEndpoints.forEach(function (endpoint) {
@@ -28,23 +28,23 @@ Y.TestRunner.add(new Y.TestCase({
         });
     },
 
-    "check isActive endpoint for unavailable features": function () {
+    "check isEnabled endpoint for unavailable features": function () {
         var feature = 'notAnAvailableFeature';
 
-        Assert.isFalse(this.app.isActive(feature));
+        Assert.isFalse(this.app.isEnabled(feature));
     },
 
     "toggle a feature": function () {
         var feature = 'brandSpankingNewFeature';
 
-        Assert.isTrue(this.app.activate(feature),
-            'Feature "' + feature + '" has been activated.');
-        Assert.isTrue(this.app.isActive(feature),
+        Assert.isTrue(this.app.enable(feature),
+            'Feature "' + feature + '" has been enabled.');
+        Assert.isTrue(this.app.isEnabled(feature),
             'Feature "' + feature + '" is currently active.');
 
-        Assert.isTrue(this.app.deactivate(feature),
-            'Feature "' + feature + '" has been deactivated.');
-        Assert.isFalse(this.app.isActive(feature),
+        Assert.isTrue(this.app.disable(feature),
+            'Feature "' + feature + '" has been disabled.');
+        Assert.isFalse(this.app.isEnabled(feature),
             'Feature "' + feature + '" is currently inactive.');
     },
 }));

@@ -1,13 +1,13 @@
 /*jslint nomen: true*/
 var features_ = {};
 
-function activate(featureName) {
+function enable(featureName) {
     features_[featureName] = true;
 
     return true;
 }
 
-function deactivate(featureName) {
+function disable(featureName) {
     if (features_.hasOwnProperty(featureName)) {
         delete features_[featureName];
     }
@@ -15,7 +15,7 @@ function deactivate(featureName) {
     return true;
 }
 
-function isActive(featureName) {
+function isEnabled(featureName) {
     if (features_.hasOwnProperty(featureName)) {
         return features_[featureName];
     }
@@ -24,7 +24,7 @@ function isActive(featureName) {
 }
 
 module.exports = {
-    "activate": activate,
-    "deactivate": deactivate,
-    "isActive": isActive
+    "enable": enable,
+    "disable": disable,
+    "isEnabled": isEnabled
 };
