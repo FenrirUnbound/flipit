@@ -2,8 +2,10 @@ var Y = require('yuitest'),
     Assert = Y.Assert,
     path = require('path'),
     fs = require('fs'),
+    helper = require('./helper'),
     FEATURE_LOADER_PATH = path.join('..', 'lib', 'feature-loader'),
-    TEST_FILE_FOLDER = path.resolve('test', 'testFeatureFiles');
+    TEST_FILE_FOLDER = path.resolve('test', 'testFeatureFiles'),
+    TEST_FEATURE_FILE = path.resolve(TEST_FILE_FOLDER, 'feature0.json');
 
 Y.TestRunner.add(new Y.TestCase({
     "name": "Functional Test Feature Loader",
@@ -14,23 +16,58 @@ Y.TestRunner.add(new Y.TestCase({
         }
     },
 
+    "setUp": function () {
+        this.module = require(FEATURE_LOADER_PATH);
+    },
 
-    "test load callback is called when file update occurs": function () {
-        var module = require(FEATURE_LOADER_PATH),
-            testFilePath = path.resolve('test', 'testFeatureFiles', 'feature0.json'),
-            self = this;
+    "tearDown": function () {
+        this.watcher.close();
+    },
 
-        module.load(testFilePath, function (error) {
+    "test load data from a file": function () {
+        var testData = {
+                "testFeature": true,
+                "anotherFeatureForTesting": true
+            },
+            self = this,
+            expectedCount = 2;
+
+        self.watcher = self.module.load(TEST_FEATURE_FILE, function (error, data) {
             self.resume(function () {
-                Assert.isNull(error, 'No errors received from update proc.');
+                Assert.areSame(expectedCount, helper.validateHash(testData, data));
             });
         });
 
-        fs.appendFile(testFilePath, '\n', function (error) {
-            Assert.isNull(error, 'No errors received from updating test json file');
+        self.wait(1000);
+    },
+
+    "test load callback is called when file update occurs": function () {
+        var self = this,
+            waitingState = false;
+
+        self.watcher = self.module.load(TEST_FEATURE_FILE, function (error, data) {
+            Assert.isNull(error, 'No errors received from update proc.');
+
+            if (waitingState) {
+                // Ignore the initial update proc from the first load call
+
+                self.resume(function () {
+                    Assert.isNull(error, 'No errors received from update proc.');
+                });                
+            }
         });
 
-        this.wait(5000);
+        self.wait(function () {
+            waitingState = true;
+
+            fs.appendFile(TEST_FEATURE_FILE, '\n', function (error, data) {
+                Assert.isNull(error, 'No errors received from updating test json file');
+            })
+
+            self.wait(function () {
+                Assert.fail('No callbacks were made.');
+            }, 1000);
+        }, 1000);
     },
 
     "test load callback is not called when file rename occurs": function () {
@@ -44,15 +81,12 @@ Y.TestRunner.add(new Y.TestCase({
         fs.createReadStream(testFileSource).pipe(fs.createWriteStream(testFilePath));
 
         module.load(testFilePath, function (error) {
-            self.resume(function () {
-                Assert.fail("Should not be proc'd.");
-            });
+            Assert.fail("Should not be proc'd.");
         });
 
         fs.rename(testFilePath, path.resolve(TEST_FILE_FOLDER, 'feature2.json'), function (error) {
             Assert.isNull(error, 'No errors received from updating test json file.');
         });
-
-        self.wait(5000);
+        this.wait(1000);
     }
 }));
