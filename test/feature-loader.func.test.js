@@ -2,8 +2,10 @@ var Y = require('yuitest'),
     Assert = Y.Assert,
     path = require('path'),
     fs = require('fs'),
+    helper = require('./helper'),
     FEATURE_LOADER_PATH = path.join('..', 'lib', 'feature-loader'),
-    TEST_FILE_FOLDER = path.resolve('test', 'testFeatureFiles');
+    TEST_FILE_FOLDER = path.resolve('test', 'testFeatureFiles'),
+    TEST_FEATURE_FILE = path.resolve(TEST_FILE_FOLDER, 'feature0.json');
 
 Y.TestRunner.add(new Y.TestCase({
     "name": "Functional Test Feature Loader",
@@ -14,23 +16,46 @@ Y.TestRunner.add(new Y.TestCase({
         }
     },
 
+    "setUp": function () {
+        this.module = require(FEATURE_LOADER_PATH);
+    },
+
+    "tearDown": function () {
+        this.watcher.close();
+    },
+
+    "test load data from a file": function () {
+        var testData = {
+                "testFeature": true,
+                "anotherFeatureForTesting": true
+            },
+            self = this,
+            expectedCount = 2;
+
+        self.watcher = self.module.load(TEST_FEATURE_FILE, function (error, data) {
+            self.resume(function () {
+                Assert.areSame(expectedCount, helper.validateHash(testData, data));
+            });
+        });
+
+        self.wait(1000);
+    },
 
     "test load callback is called when file update occurs": function () {
-        var module = require(FEATURE_LOADER_PATH),
-            testFilePath = path.resolve('test', 'testFeatureFiles', 'feature0.json'),
-            self = this;
+        var self = this,
+            watcher;
 
-        module.load(testFilePath, function (error) {
+        self.watcher = self.module.load(TEST_FEATURE_FILE, function (error, data) {
             self.resume(function () {
                 Assert.isNull(error, 'No errors received from update proc.');
             });
         });
 
-        fs.appendFile(testFilePath, '\n', function (error) {
+        fs.appendFile(TEST_FEATURE_FILE, '\n', function (error, data) {
             Assert.isNull(error, 'No errors received from updating test json file');
         });
 
-        this.wait(5000);
+        self.wait(1000);
     },
 
     "test load callback is not called when file rename occurs": function () {
@@ -44,15 +69,11 @@ Y.TestRunner.add(new Y.TestCase({
         fs.createReadStream(testFileSource).pipe(fs.createWriteStream(testFilePath));
 
         module.load(testFilePath, function (error) {
-            self.resume(function () {
-                Assert.fail("Should not be proc'd.");
-            });
+            Assert.fail("Should not be proc'd.");
         });
 
         fs.rename(testFilePath, path.resolve(TEST_FILE_FOLDER, 'feature2.json'), function (error) {
             Assert.isNull(error, 'No errors received from updating test json file.');
         });
-
-        self.wait(5000);
     }
 }));
