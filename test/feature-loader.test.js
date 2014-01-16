@@ -2,6 +2,7 @@ var Y = require('yuitest'),
     Assert = Y.Assert,
     mockery = require('mockery'),
     path = require('path'),
+    helper = require('./helper'),
     FEATURE_LOADER_PATH = path.join('..', 'lib', 'feature-loader');
 
 function mockFsWatch(eventName, testFilename) {
@@ -9,6 +10,14 @@ function mockFsWatch(eventName, testFilename) {
         Assert.areSame(testFilename, filename);
         callback(eventName, filename);
     };
+}
+
+function mockReadFile(filename, options, callback) {
+    callback(null, jsonString());
+}
+
+function jsonString() {
+    return '{"testFeature": true,"anotherFeatureForTesting": true}';
 }
 
 Y.TestRunner.add(new Y.TestCase({
@@ -44,20 +53,29 @@ Y.TestRunner.add(new Y.TestCase({
         });
     },
 
+    "test load endpoint returns hash of features": function () {
+        var self = this,
+            testFilePath = path.resolve('test', 'testFeatureFiles', 'feature0.json');
+
+        //this.module.load(testFilePath, );
+        Assert.isTrue(true);
+    },
+
     "test load endpoint with update only from change event": function () {
-        var self = this;
+        var self = this,
+            expectedCount = 2;
 
         mockery.registerMock('fs', {
-            "watch": mockFsWatch('change', self.testFilename)
+            "watch": mockFsWatch('change', self.testFilename),
+            "readFile": mockReadFile
         });
 
         mockery.registerAllowable(FEATURE_LOADER_PATH);
         this.module = require(FEATURE_LOADER_PATH);
 
-        this.module.load(self.testFilename, function (error, filename) {
+        this.module.load(self.testFilename, function (error, data) {
             Assert.isNull(error);
-            Assert.areSame(self.testFilename, filename);
-
+            Assert.areSame(expectedCount, helper.validateHash(JSON.parse(jsonString()), data));
         });
     },
 
@@ -65,7 +83,8 @@ Y.TestRunner.add(new Y.TestCase({
         var self = this;
 
         mockery.registerMock('fs', {
-            "watch": mockFsWatch('rename', self.testFilename)
+            "watch": mockFsWatch('rename', self.testFilename),
+            "readFile": function () { /* this should not proc the callback*/ }
         });
 
         mockery.registerAllowable(FEATURE_LOADER_PATH);
