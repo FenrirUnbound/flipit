@@ -43,19 +43,31 @@ Y.TestRunner.add(new Y.TestCase({
 
     "test load callback is called when file update occurs": function () {
         var self = this,
-            watcher;
+            waitingState = false;
 
         self.watcher = self.module.load(TEST_FEATURE_FILE, function (error, data) {
-            self.resume(function () {
-                Assert.isNull(error, 'No errors received from update proc.');
-            });
+            Assert.isNull(error, 'No errors received from update proc.');
+
+            if (waitingState) {
+                // Ignore the initial update proc from the first load call
+
+                self.resume(function () {
+                    Assert.isNull(error, 'No errors received from update proc.');
+                });                
+            }
         });
 
-        fs.appendFile(TEST_FEATURE_FILE, '\n', function (error, data) {
-            Assert.isNull(error, 'No errors received from updating test json file');
-        });
+        self.wait(function () {
+            waitingState = true;
 
-        self.wait(1000);
+            fs.appendFile(TEST_FEATURE_FILE, '\n', function (error, data) {
+                Assert.isNull(error, 'No errors received from updating test json file');
+            })
+
+            self.wait(function () {
+                Assert.fail('No callbacks were made.');
+            }, 1000);
+        }, 1000);
     },
 
     "test load callback is not called when file rename occurs": function () {
@@ -75,5 +87,6 @@ Y.TestRunner.add(new Y.TestCase({
         fs.rename(testFilePath, path.resolve(TEST_FILE_FOLDER, 'feature2.json'), function (error) {
             Assert.isNull(error, 'No errors received from updating test json file.');
         });
+        this.wait(1000);
     }
 }));
