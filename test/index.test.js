@@ -1,5 +1,6 @@
 var Y = require('yuitest'),
     Assert = Y.Assert,
+    helper = require('./helper'),
     mockery = require('mockery'),
     path = require('path'),
     FLIPIT_PATH = '../index';
@@ -63,12 +64,8 @@ Y.TestRunner.add(new Y.TestCase({
     },
 
     "loading a feature flag from file": function () {
-        var testFeatures = {
-                "testFeature": true,
-                "anotherFeatureForTesting": true,
-                "thisShouldBeDisabled": false
-            },
-            testFilePath = path.resolve('test', 'testFeatureFiles', 'feature0.json'),
+        var testFilePath = path.resolve('test', 'testFeatureFiles', 'feature0.json'),
+            testFeatures = helper.loadDataFromFile(testFilePath),
             me = this;
 
         mockery.enable({
