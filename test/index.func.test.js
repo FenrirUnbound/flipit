@@ -7,21 +7,19 @@ Y.TestRunner.add(new Y.TestCase({
     "name": "Functional Test Index",
 
     "setUp": function () {
-        this.app = require('../index');
         this.featureFile = helper.generateTestFile();
-        console.log('index.func.test.js');
     },
 
     "tearDown": function () {
-        console.log('index.func.test.js');
         helper.destroyTestFile(this.featureFile);
+        this.watcher.close();
     },
 
     "load a set of feature flags from file": function () {
         var me = this,
             testFeatures = helper.loadDataFromFile(me.featureFile);
 
-        me.app.load(me.featureFile, function () {
+        me.watcher = me.app.load(me.featureFile, function () {
             me.resume(function () {
                 Object.keys(testFeatures).forEach(function (feature) {
                     if (testFeatures.hasOwnProperty(feature)) {

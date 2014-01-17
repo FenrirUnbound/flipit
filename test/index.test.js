@@ -10,11 +10,9 @@ Y.TestRunner.add(new Y.TestCase({
 
     "setUp": function () {
         this.app = require(FLIPIT_PATH);
-        console.log('index..test.js');
     },
 
     "tearDown": function () {
-        console.log('index..test.js');
         mockery.deregisterAll();
         mockery.disable();
     },
