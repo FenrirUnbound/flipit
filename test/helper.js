@@ -1,5 +1,41 @@
 var fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    TEMPLATE_FEATURE_FILE = path.resolve('test', 'testFeatureFiles', 'templateFeatureFile.json');
+
+function destroyTestFile(filePath) {
+    console.log('destroying...');
+    if (filePath !== TEMPLATE_FEATURE_FILE) {
+        try {
+            console.log('unlinking...');
+            fs.unlinkSync(filePath);
+            console.log('unlinked.');
+        } catch (error) {
+            console.error('Cannot delete "' + filePath + '". Possibly does not exist.');
+        }
+    }
+    console.log('done destroying.');
+}
+
+function generateTestFile() {
+    var desiredFeatureFile = path.resolve('test', 'testFeatureFiles', 'feature0.json'),
+        dataString;
+
+    try {
+        dataString = fs.readFileSync(TEMPLATE_FEATURE_FILE, 'utf8');    
+    } catch (error) {
+        console.error('Test template file "' + TEMPLATE_FEATURE_FILE +'" unavailable.');
+        return null;
+    }
+    
+    try {
+        fs.writeFileSync(desiredFeatureFile, dataString, 'utf8');    
+    } catch (error) {
+        console.error('Cannot generate test feature file "' + desiredFeatureFile +'".');
+        return null;
+    }
+
+    return desiredFeatureFile;
+}
 
 function loadDataFromFile(filename) {
     var dataString = fs.readFileSync(filename, 'utf8');
@@ -22,6 +58,8 @@ function validateHash(expectedHash, actualHash) {
 }
 
 module.exports = {
-    validateHash: validateHash,
-    loadDataFromFile: loadDataFromFile
+    destroyTestFile: destroyTestFile,
+    generateTestFile: generateTestFile,
+    loadDataFromFile: loadDataFromFile,
+    validateHash: validateHash
 };

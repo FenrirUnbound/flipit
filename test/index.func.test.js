@@ -1,21 +1,25 @@
 var Y = require('yuitest'),
     Assert = Y.Assert,
     helper = require('./helper'),
-    path = require('path'),
-    TEST_FEATURE_FILE = path.resolve('test', 'testFeatureFiles', 'feature0.json');
+    path = require('path');
 
 Y.TestRunner.add(new Y.TestCase({
     "name": "Functional Test Index",
 
     "setUp": function () {
         this.app = require('../index');
+        this.featureFile = helper.generateTestFile();
+    },
+
+    "tearDown": function () {
+        helper.destroyTestFile(this.featureFile);
     },
 
     "load a set of feature flags from file": function () {
         var me = this,
-            testFeatures = helper.loadDataFromFile(TEST_FEATURE_FILE);
+            testFeatures = helper.loadDataFromFile(me.featureFile);
 
-        this.app.load(TEST_FEATURE_FILE, function () {
+        me.app.load(me.featureFile, function () {
             me.resume(function () {
                 Object.keys(testFeatures).forEach(function (feature) {
                     if (testFeatures.hasOwnProperty(feature)) {
