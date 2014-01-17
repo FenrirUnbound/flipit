@@ -64,7 +64,7 @@ Y.TestRunner.add(new Y.TestCase({
     },
 
     "loading a feature flag from file": function () {
-        var testFilePath = path.resolve('test', 'testFeatureFiles', 'feature0.json'),
+        var testFilePath = helper.generateTestFile(),
             testFeatures = helper.loadDataFromFile(testFilePath),
             me = this;
 
@@ -95,5 +95,7 @@ Y.TestRunner.add(new Y.TestCase({
                 }
             });
         });
+
+        helper.destroyTestFile(testFilePath);
     }
 }));
