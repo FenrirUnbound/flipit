@@ -3,13 +3,17 @@ var fs = require('fs'),
     TEMPLATE_FEATURE_FILE = path.resolve('test', 'testFeatureFiles', 'templateFeatureFile.json');
 
 function destroyTestFile(filePath) {
+    console.log('destroying...');
     if (filePath !== TEMPLATE_FEATURE_FILE) {
         try {
-            fs.unlinkSync(filePath);    
+            console.log('unlinking...');
+            fs.unlinkSync(filePath);
+            console.log('unlinked.');
         } catch (error) {
             console.error('Cannot delete "' + filePath + '". Possibly does not exist.');
         }
     }
+    console.log('done destroying.');
 }
 
 function generateTestFile() {
