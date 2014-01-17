@@ -1,4 +1,5 @@
 {
     "testFeature": true,
-    "anotherFeatureForTesting": true
+    "anotherFeatureForTesting": true,
+    "thisShouldBeUnavailable": false
 }
