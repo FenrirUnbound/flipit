@@ -25,12 +25,9 @@ Y.TestRunner.add(new Y.TestCase({
     },
 
     "test load data from a file": function () {
-        var testData = {
-                "testFeature": true,
-                "anotherFeatureForTesting": true
-            },
+        var testData = helper.loadDataFromFile(TEST_FEATURE_FILE),
             self = this,
-            expectedCount = 2;
+            expectedCount = 3;
 
         self.watcher = self.module.load(TEST_FEATURE_FILE, function (error, data) {
             self.resume(function () {

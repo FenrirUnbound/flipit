@@ -1,3 +1,12 @@
+var fs = require('fs'),
+    path = require('path');
+
+function loadDataFromFile(filename) {
+    var dataString = fs.readFileSync(filename, 'utf8');
+
+    return JSON.parse(dataString);
+}
+
 function validateHash(expectedHash, actualHash) {
     var count = 0;
 
@@ -13,5 +22,6 @@ function validateHash(expectedHash, actualHash) {
 }
 
 module.exports = {
-    validateHash: validateHash
+    validateHash: validateHash,
+    loadDataFromFile: loadDataFromFile
 };
