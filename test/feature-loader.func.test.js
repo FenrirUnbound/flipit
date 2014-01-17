@@ -18,9 +18,11 @@ Y.TestRunner.add(new Y.TestCase({
     "setUp": function () {
         this.module = require(FEATURE_LOADER_PATH);
         this.featureFile = helper.generateTestFile();
+        console.log('featureloader.func.test.js');
     },
 
     "tearDown": function () {
+        console.log('featureloader.func.test.js');
         helper.destroyTestFile(this.featureFile);
         this.watcher.close();
     },

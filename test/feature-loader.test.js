@@ -30,9 +30,11 @@ Y.TestRunner.add(new Y.TestCase({
         mockery.enable({
             useCleanCache: true
         });
+        console.log('featureloader.test.js');
     },
 
     "tearDown": function () {
+        console.log('featureloader.test.js');
         mockery.deregisterAll();
         mockery.disable();
     },

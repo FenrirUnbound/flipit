@@ -9,9 +9,11 @@ Y.TestRunner.add(new Y.TestCase({
     "setUp": function () {
         this.app = require('../index');
         this.featureFile = helper.generateTestFile();
+        console.log('index.func.test.js');
     },
 
     "tearDown": function () {
+        console.log('index.func.test.js');
         helper.destroyTestFile(this.featureFile);
     },
 
