@@ -12,6 +12,7 @@ Y.TestRunner.add(new Y.TestCase({
     },
 
     "tearDown": function () {
+        this.watcher.close();
         helper.destroyTestFile(this.featureFile);
     },
 
@@ -19,7 +20,7 @@ Y.TestRunner.add(new Y.TestCase({
         var me = this,
             testFeatures = helper.loadDataFromFile(me.featureFile);
 
-        me.app.load(me.featureFile, function () {
+        me.watcher = me.app.load(me.featureFile, function () {
             me.resume(function () {
                 Object.keys(testFeatures).forEach(function (feature) {
                     if (testFeatures.hasOwnProperty(feature)) {

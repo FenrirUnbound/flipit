@@ -36,7 +36,7 @@ function update(data, callback) {
 }
 
 function load(filename, callback) {
-    featureLoader.load(filename, function (error, data) {
+    return featureLoader.load(filename, function (error, data) {
         update(data, callback);
     });
 }
