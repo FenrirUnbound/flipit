@@ -1,11 +1,19 @@
 var Y = require('yuitest'),
-    Assert = Y.Assert;
+    Assert = Y.Assert,
+    mockery = require('mockery'),
+    path = require('path'),
+    FLIPIT_PATH = '../index';
 
 Y.TestRunner.add(new Y.TestCase({
     "name": "Test Index",
 
     "setUp": function () {
-        this.app = require('../index');
+        this.app = require(FLIPIT_PATH);
+    },
+
+    "tearDown": function () {
+        mockery.deregisterAll();
+        mockery.disable();
     },
 
     "test require index package": function () {
@@ -17,7 +25,8 @@ Y.TestRunner.add(new Y.TestCase({
             testEndpoints = [
                 'isEnabled',
                 'enable',
-                'disable'
+                'disable',
+                'load'
             ];
 
         testEndpoints.forEach(function (endpoint) {
@@ -51,5 +60,43 @@ Y.TestRunner.add(new Y.TestCase({
             'Feature "' + feature + '" is initially disabled.');
         Assert.isFalse(this.app.disable(feature),
             'Feature "' + feature + '" is already disabled.');
+    },
+
+    "loading a feature flag from file": function () {
+        var testFeatures = {
+                "testFeature": true,
+                "anotherFeatureForTesting": true,
+                "thisShouldBeDisabled": false
+            },
+            testFilePath = path.resolve('test', 'testFeatureFiles', 'feature0.json'),
+            me = this;
+
+        mockery.enable({
+            useCleanCache: true
+        });
+        mockery.registerMock('./lib/feature-loader', {
+            "load": function (filename, callback) {
+                callback(null, testFeatures);
+            }
+        });
+        mockery.registerAllowable(FLIPIT_PATH);
+        this.app = require(FLIPIT_PATH);
+
+        // Make sure the current test features are disabled
+        Object.keys(testFeatures).forEach(function (feature) {
+            if (testFeatures.hasOwnProperty(feature)) {
+                Assert.isFalse(me.app.isEnabled(feature),
+                    'Feature "' + feature + '" is initially disabled.');
+            }
+        });
+
+        this.app.load(testFilePath, function () {
+            Object.keys(testFeatures).forEach(function (feature) {
+                if (testFeatures.hasOwnProperty(feature)) {
+                    Assert.areSame(testFeatures[feature], me.app.isEnabled(feature),
+                        'Feature "' + feature + '" is properly flagged from a load.');
+                }
+            });
+        });
     }
 }));
