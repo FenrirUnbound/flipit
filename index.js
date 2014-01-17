@@ -1,5 +1,6 @@
 /*jslint nomen: true*/
-var features_ = {};
+var features_ = {},
+    featureLoader = require('./lib/feature-loader');
 
 function enable(featureName) {
     features_[featureName] = true;
@@ -24,8 +25,25 @@ function isEnabled(featureName) {
     return false;
 }
 
+function update(data, callback) {
+    Object.keys(data).forEach(function (feature) {
+        if (data.hasOwnProperty(feature)) {
+            features_[feature] = data[feature];
+        }
+    });
+
+    callback();
+}
+
+function load(filename, callback) {
+    featureLoader.load(filename, function (error, data) {
+        update(data, callback);
+    });
+}
+
 module.exports = {
     "enable": enable,
     "disable": disable,
-    "isEnabled": isEnabled
+    "isEnabled": isEnabled,
+    "load": load
 };
