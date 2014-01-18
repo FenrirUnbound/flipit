@@ -42,55 +42,47 @@ Y.TestRunner.add(new Y.TestCase({
     },
 
     "validate API": function () {
-        var self = this,
+        var me = this,
             testEndpoints = [
                 'load'
             ];
 
         testEndpoints.forEach(function (endpoint) {
-            Assert.isTrue(self.module.hasOwnProperty(endpoint),
+            Assert.isTrue(me.module.hasOwnProperty(endpoint),
                 'Endpoint "' + endpoint + '" exists.');
         });
     },
 
-    "test load endpoint returns hash of features": function () {
-        var self = this,
-            testFilePath = path.resolve('test', 'testFeatureFiles', 'feature0.json');
-
-        //this.module.load(testFilePath, );
-        Assert.isTrue(true);
-    },
-
     "test load endpoint with update only from change event": function () {
-        var self = this,
+        var me = this,
             expectedCount = 2;
 
         mockery.registerMock('fs', {
-            "watch": mockFsWatch('change', self.testFilename),
+            "watch": mockFsWatch('change', me.testFilename),
             "readFile": mockReadFile
         });
 
         mockery.registerAllowable(FEATURE_LOADER_PATH);
         this.module = require(FEATURE_LOADER_PATH);
 
-        this.module.load(self.testFilename, function (error, data) {
+        this.module.load(me.testFilename, function (error, data) {
             Assert.isNull(error);
             Assert.areSame(expectedCount, helper.validateHash(JSON.parse(jsonString()), data));
         });
     },
 
     "test load endpoint with no update from rename event": function () {
-        var self = this;
+        var me = this;
 
         mockery.registerMock('fs', {
-            "watch": mockFsWatch('rename', self.testFilename),
+            "watch": mockFsWatch('rename', me.testFilename),
             "readFile": function () { /* this should not proc the callback*/ }
         });
 
         mockery.registerAllowable(FEATURE_LOADER_PATH);
         this.module = require(FEATURE_LOADER_PATH);
 
-        this.module.load(self.testFilename, function (error, data) {
+        this.module.load(me.testFilename, function (error, data) {
             Assert.fail("Callback should not be proc'd from rename event");
         });
     }
