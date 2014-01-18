@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/FenrirUnbound/flipit.png?branch=master)](https://travis-ci.org/FenrirUnbound/flipit)
+[![Build Status](https://travis-ci.org/FenrirUnbound/flipit.png?branch=master)](https://travis-ci.org/FenrirUnbound/flipit) [![Coverage Status](https://coveralls.io/repos/FenrirUnbound/flipit/badge.png?branch=)](https://coveralls.io/r/FenrirUnbound/flipit?branch=)
 
 # flipit
 
