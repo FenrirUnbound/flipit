@@ -4,7 +4,7 @@
   "description": "Feature flagging for NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "ytestrunner -v --coverage --istanbul cover --cov-include=test/*.test.js --cov-exclude=**/node_modules/** --save-coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "ytestrunner --coverage --istanbul cover --cov-include=test/*.test.js --cov-exclude=**/node_modules/** --save-coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
