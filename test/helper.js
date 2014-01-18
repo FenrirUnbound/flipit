@@ -5,7 +5,7 @@ var fs = require('fs'),
 function destroyTestFile(filePath) {
     if (filePath !== TEMPLATE_FEATURE_FILE) {
         try {
-            fs.unlinkSync(filePath);    
+            fs.unlinkSync(filePath);
         } catch (error) {
             console.error('Cannot delete "' + filePath + '". Possibly does not exist.');
         }
@@ -17,16 +17,16 @@ function generateTestFile() {
         dataString;
 
     try {
-        dataString = fs.readFileSync(TEMPLATE_FEATURE_FILE, 'utf8');    
-    } catch (error) {
-        console.error('Test template file "' + TEMPLATE_FEATURE_FILE +'" unavailable.');
+        dataString = fs.readFileSync(TEMPLATE_FEATURE_FILE, 'utf8');
+    } catch (readError) {
+        console.error('Test template file "' + TEMPLATE_FEATURE_FILE + '" unavailable.');
         return null;
     }
-    
+
     try {
-        fs.writeFileSync(desiredFeatureFile, dataString, 'utf8');    
-    } catch (error) {
-        console.error('Cannot generate test feature file "' + desiredFeatureFile +'".');
+        fs.writeFileSync(desiredFeatureFile, dataString, 'utf8');
+    } catch (writeError) {
+        console.error('Cannot generate test feature file "' + desiredFeatureFile + '".');
         return null;
     }
 
