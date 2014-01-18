@@ -51,7 +51,7 @@ Y.TestRunner.add(new Y.TestCase({
 
                 me.resume(function () {
                     Assert.isNull(error, 'No errors received from update proc.');
-                });                
+                });
             }
         });
 
@@ -60,7 +60,7 @@ Y.TestRunner.add(new Y.TestCase({
 
             fs.appendFile(me.featureFile, '\n', function (error, data) {
                 Assert.isNull(error, 'No errors received from updating test json file');
-            })
+            });
 
             me.wait(function () {
                 Assert.fail('No callbacks were made.');
