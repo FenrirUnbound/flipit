@@ -1,6 +1,6 @@
 {
   "name": "flipit",
-  "version": "0.4.6",
+  "version": "1.0.0",
   "description": "Feature flagging for NodeJS",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,26 @@
     "type": "git",
     "url": "git://github.com/FenrirUnbound/flipit.git"
   },
-  "author": "Darren m",
+  "keywords": [
+    "feature",
+    "features",
+    "flag",
+    "flags",
+    "flagging",
+    "toggle",
+    "switch",
+    "switches",
+    "feature flagging",
+    "feature toggling",
+    "feature switching",
+    "continuous delivery",
+    "continuous deployment"
+  ],
+  "author": "Darren M",
   "license": "MIT",
+  "engines": {
+    "node": ">=0.8"
+  },
   "bugs": {
     "url": "https://github.com/FenrirUnbound/flipit/issues"
   },
