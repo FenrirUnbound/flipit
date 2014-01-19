@@ -9,12 +9,6 @@ var Y = require('yuitest'),
 Y.TestRunner.add(new Y.TestCase({
     "name": "Functional Test Feature Loader",
 
-    "_should": {
-        "ignore": {
-            "test load callback is not called when file rename occurs": true
-        }
-    },
-
     "setUp": function () {
         this.module = require(FEATURE_LOADER_PATH);
         this.featureFile = helper.generateTestFile();
@@ -66,25 +60,5 @@ Y.TestRunner.add(new Y.TestCase({
                 Assert.fail('No callbacks were made.');
             }, 1000);
         }, 1000);
-    },
-
-    "test load callback is not called when file rename occurs": function () {
-        // SKIP: Due to unstable fs.watch API
-        var module = require(FEATURE_LOADER_PATH),
-            testFileSource = path.resolve(TEST_FILE_FOLDER, 'feature0.json'),
-            testFilePath = path.resolve(TEST_FILE_FOLDER, 'feature1.json'),
-            self = this;
-
-        // Copy source
-        fs.createReadStream(testFileSource).pipe(fs.createWriteStream(testFilePath));
-
-        module.load(testFilePath, function (error) {
-            Assert.fail("Should not be proc'd.");
-        });
-
-        fs.rename(testFilePath, path.resolve(TEST_FILE_FOLDER, 'feature2.json'), function (error) {
-            Assert.isNull(error, 'No errors received from updating test json file.');
-        });
-        this.wait(1000);
     }
 }));
