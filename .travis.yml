@@ -1,13 +1,21 @@
 language: node_js
 node_js:
-  - "0.11"
-  - "0.10"
-  - "0.8"
+- '0.11'
+- '0.10'
+- '0.8'
 branches:
   only:
-    - master
+  - master
 matrix:
   allow_failures:
-    - node_js: "0.11"
+  - node_js: '0.11'
+deploy:
+  provider: npm
+  email: aeneascorrupt@gmail.com
+  api_key:
+    secure: ejUyLRyCYuGgWWRvENv1PbPk5QXyYSmppgnjRwl+Q9/s4cfF/xyH+8SyQyrv/dSi0LuE0aegkJkayaXY4Z50xqqPLpjqK9lp990FyDplwuq2yy+KS92bhVHfdZb9pPxKPjKLyU6t4XGeBatBhbyUkiUECx4wORHBUeoSSCSu87c=
+  on:
+    branch: master
+    node: 0.10
 notifications:
   email: false
