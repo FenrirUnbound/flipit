@@ -9,13 +9,13 @@ branches:
 matrix:
   allow_failures:
   - node_js: '0.11'
+notifications:
+  email: false
 deploy:
   provider: npm
   email: aeneascorrupt@gmail.com
   api_key:
-    secure: ejUyLRyCYuGgWWRvENv1PbPk5QXyYSmppgnjRwl+Q9/s4cfF/xyH+8SyQyrv/dSi0LuE0aegkJkayaXY4Z50xqqPLpjqK9lp990FyDplwuq2yy+KS92bhVHfdZb9pPxKPjKLyU6t4XGeBatBhbyUkiUECx4wORHBUeoSSCSu87c=
+    secure: YE5ko05tjl9Kq2rP9CT13L+sXopzhpVBdZ3U/oXz82E4Gl8gB2Pc+kJHWPaUBwqSzs19nK2g+3OEj3Z4U+RVEFmaypR7LRU8CMOYLl9IG9kXRC3bR+wsazijhjcYpo+blox/L/t6zWFzhYYXboMS0tcpFNWwH3LRVV16xzl4BdI=
   on:
     branch: master
-    node: 0.10
-notifications:
-  email: false
+    repo: FenrirUnbound/flipit
