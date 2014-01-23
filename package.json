@@ -39,8 +39,5 @@
     "yuitest": "*",
     "ytestrunner": "*",
     "coveralls": "~2.6.1"
-  },
-  "dependencies": {
-    "path": "~0.4.9"
   }
 }
