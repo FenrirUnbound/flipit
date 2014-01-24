@@ -1,6 +1,6 @@
 {
   "name": "flipit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Feature flagging for NodeJS",
   "main": "index.js",
   "scripts": {
