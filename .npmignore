@@ -1,3 +1,4 @@
 .coveralls.yml
 .gitignore
 .travis.yml
+wercker.yml
