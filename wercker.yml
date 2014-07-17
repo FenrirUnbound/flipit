@@ -15,3 +15,10 @@ build:
         code: |
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
+deploy:
+  steps:
+    - script:
+        name: coveralls coverage information
+        code: |
+          cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+          rm -rf coverage
