@@ -32,7 +32,9 @@ function update(data, callback) {
         }
     });
 
-    callback();
+    if(typeof callback === 'function') {
+      callback();
+    }
 }
 
 function load(filename, callback) {

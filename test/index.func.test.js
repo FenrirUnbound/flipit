@@ -32,5 +32,22 @@ Y.TestRunner.add(new Y.TestCase({
         });
 
         me.wait(1000);
+    },
+
+    "load a set of features flags from file with no update callback": function () {
+      var me = this,
+        testFeatures = helper.loadDataFromFile(me.featureFile);
+
+      me.watcher = me.app.load(me.featureFile);
+
+      me.wait(function() {
+        Object.keys(testFeatures).forEach(function (feature) {
+            if (testFeatures.hasOwnProperty(feature)) {
+                Assert.areSame(testFeatures[feature], me.app.isEnabled(feature),
+                    'The feature "' + feature + '" is enabled by file loading.');
+            }
+        });
+      }, 1000);
+
     }
 }));
