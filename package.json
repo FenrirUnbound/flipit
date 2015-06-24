@@ -35,6 +35,7 @@
     "url": "https://github.com/FenrirUnbound/flipit/issues"
   },
   "devDependencies": {
+    "async": "^1.2.1",
     "chai": "^3.0.0",
     "coveralls": "~2.6.1",
     "jslint": "*",
