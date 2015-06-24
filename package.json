@@ -4,7 +4,8 @@
   "description": "Feature flagging for NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "ytestrunner --exclude=tests/**/*.js --coverage --istanbul cover --cov-include=index.js --cov-include=lib/* --cov-exclude=**/node_modules/** --cov-exclude=**/unit/** --save-coverage"
+    "test": "ytestrunner --exclude=tests/**/*.js --coverage --istanbul cover --cov-include=index.js --cov-include=lib/* --cov-exclude=**/node_modules/** --cov-exclude=**/unit/** --save-coverage",
+    "try": "mocha ./tests --recursive"
   },
   "repository": {
     "type": "git",
@@ -34,10 +35,14 @@
     "url": "https://github.com/FenrirUnbound/flipit/issues"
   },
   "devDependencies": {
+    "chai": "^3.0.0",
+    "coveralls": "~2.6.1",
     "jslint": "*",
+    "mocha": "^2.2.5",
     "mockery": "*",
-    "yuitest": "*",
+    "sinon": "^1.15.3",
+    "sinon-chai": "^2.8.0",
     "ytestrunner": "*",
-    "coveralls": "~2.6.1"
+    "yuitest": "*"
   }
 }
