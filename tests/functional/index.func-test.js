@@ -1,5 +1,6 @@
 var expect = require('chai').expect;
 var fs = require('fs');
+var mockery = require('mockery');
 var path = require('path');
 
 
@@ -7,6 +8,13 @@ describe('Functional -- Main', function describeFuncMain() {
     var main;
     var testFilepath;
     var testFileWatcher;
+
+    before(function before() {
+        mockery.enable({
+            useCleanCache: true,
+            warnOnUnregistered: false
+        });
+    });
 
     beforeEach(function beforeAll(done) {
         main = require('../..');
@@ -20,11 +28,16 @@ describe('Functional -- Main', function describeFuncMain() {
     });
 
     afterEach(function afterAll(done) {
+        mockery.resetCache();
+
         if (testFileWatcher) {
             testFileWatcher.close();
         }
-        main = null;
         fs.unlink(testFilepath, done);
+    });
+
+    after(function after() {
+        mockery.disable();
     });
 
     it('load a set of feature flags from file', function testLoadFromFile(done) {
@@ -48,6 +61,6 @@ describe('Functional -- Main', function describeFuncMain() {
             expect(main.isEnabled('flagA')).to.be.true;
             expect(main.isEnabled('flagB')).to.be.false;
             done();
-        }, 1000);
+        }, 10);
     });
 });
