@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "ytestrunner --exclude=tests/**/*.js --coverage --istanbul cover --cov-include=index.js --cov-include=lib/* --cov-exclude=**/node_modules/** --cov-exclude=**/unit/** --save-coverage",
-    "try": "mocha ./tests --recursive"
+    "try": "istanbul cover _mocha -- ./tests --recursive"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
     "async": "^1.2.1",
     "chai": "^3.0.0",
     "coveralls": "~2.6.1",
+    "istanbul": "^0.3.17",
     "jslint": "*",
     "mocha": "^2.2.5",
     "mockery": "*",
