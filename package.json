@@ -4,8 +4,7 @@
   "description": "Feature flagging for NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "ytestrunner --exclude=tests/**/*.js --coverage --istanbul cover --cov-include=index.js --cov-include=lib/* --cov-exclude=**/node_modules/** --cov-exclude=**/unit/** --save-coverage",
-    "try": "istanbul cover _mocha -- ./tests --recursive"
+    "test": "istanbul cover _mocha -- ./tests --recursive"
   },
   "repository": {
     "type": "git",
@@ -43,8 +42,6 @@
     "mocha": "^2.2.5",
     "mockery": "*",
     "sinon": "^1.15.3",
-    "sinon-chai": "^2.8.0",
-    "ytestrunner": "*",
-    "yuitest": "*"
+    "sinon-chai": "^2.8.0"
   }
 }
