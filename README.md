@@ -3,6 +3,8 @@
 
 # flipit
 
+## Do not commit this
+
 A module that allows you to use feature flags (also known as feature flipping) in Node.js.
 
 You can enable/disable features programmatically or via an external configuration file. Any changes to the configuration file
