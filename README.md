@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/FenrirUnbound/flipit.png?branch=master)](https://travis-ci.org/FenrirUnbound/flipit) [![Coverage Status](https://coveralls.io/repos/FenrirUnbound/flipit/badge.png?branch=)](https://coveralls.io/r/FenrirUnbound/flipit?branch=)
-[![wercker status](https://app.wercker.com/status/640ac037ec438423b79226b1f689d8c3/s/master "wercker status")](https://app.wercker.com/project/bykey/640ac037ec438423b79226b1f689d8c3)
+[![wercker status](https://app.wercker.com/status/640ac037ec438423b79226b1f689d8c3/s/master "wercker status")](https://app.wercker.com/project/bykey/640ac037ec438423b79226b1f689d8c3) [![Code Climate](https://codeclimate.com/github/FenrirUnbound/flipit/badges/gpa.svg)](https://codeclimate.com/github/FenrirUnbound/flipit)
 
 # flipit
 
