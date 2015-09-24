@@ -18,7 +18,17 @@ build:
 deploy:
   steps:
     - script:
+        name: default deploy target
+        code: echo "default deploy target"
+  coveralls:
+    - script:
         name: coveralls coverage information
         code: |
           cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
           rm -rf coverage
+  code-climate:
+    - script:
+        name: code climate coverage information
+        code: |
+          npm install codeclimate-test-reporter
+          ls ./coverage
