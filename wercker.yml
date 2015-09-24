@@ -31,4 +31,4 @@ deploy:
         name: code climate coverage information
         code: |
           npm install codeclimate-test-reporter
-          ls ./coverage
+          ./node_modules/.bin/codeclimate-test-reporter < $WERCKER_ROOT/coverage/lcov.info
